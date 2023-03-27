@@ -8,7 +8,7 @@ These instructions assume you have downloaded this repository, the necessary pac
 Connect the Arduino and use the IDE to upload *arduino_independence.ino* to the Arduino. At this point also note the port the Arduino is on (e.g. COM**1**). Plug in the USB camera next and use `v4l2-ctl --list-devices` to get the device number (e.g. /dev/video**2**). Then for **device pairs** in *times.config*, enter the camera device number and Arduino port number seperated by a comma. Repeat for every camera/Arduino pair you connect to the computer (e.g. 2,1,4,3 > video2, COM1, video4, COM3).
 
 ## Before each run
-All experiment conditions are set beforehand in the *times.config* file. Importantly, ITI (inter-trial interval) settings in this file are used to generate a list of wait times. These wait times are used in two .py scripts, one of which is a training protocol (preconditioning_arduino_ind.py) and the other a testing protocol (conditioning_arduino_ind.py). 
+All experiment conditions are set beforehand in the *times.config* file. Importantly, ITI (inter-trial interval) settings in this file are used to generate a list of wait times. These wait times are used in two .py scripts, one of which is a training protocol (*preconditioning_arduino_ind.py*) and the other a testing protocol (*conditioning_arduino_ind.py*). 
 
 Once video recording has begun, the procedure for either protocols is as follows:
 
