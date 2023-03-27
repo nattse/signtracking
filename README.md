@@ -12,12 +12,12 @@ All experiment conditions are set beforehand in the *times.config* file. Importa
 
 Once video recording has begun, the procedure for either protocols is as follows:
 
-### preconditioning.py
+### preconditioning_arduino_ind.py
 - Wait ITI[n] seconds
 - Dispense food
 - n += 1
 
-### conditioning.py
+### conditioning_arduino_ind.py
 - Wait ITI[n] seconds
 - Present a lever (**lever side** in *times.config*)
 - Wait a few seconds (**lever out duration** in *times.config*)
