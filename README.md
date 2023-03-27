@@ -8,7 +8,7 @@ These instructions assume you have downloaded this repository, the necessary pac
 Connect the Arduino and use the IDE to upload *arduino_independence.ino* to the Arduino. At this point also note the port the Arduino is on (e.g. COM**1**). Plug in the USB camera next and use `v4l2-ctl --list-devices` to get the device number (e.g. /dev/video**2**). Then for **device pairs** in *times.config*, enter the camera device number and Arduino port number seperated by a comma. Repeat for every camera/Arduino pair you connect to the computer (e.g. 2,1,4,3 > video2, COM1, video4, COM3).
 
 ## Before each run
-All experiment conditions are set beforehand in the *times.config* file. Importantly, ITI (inter-trial inteval) settings in this file are used to generate a list of wait times. These wait times are used in two .py scripts, one of which is a training protocol (preconditioning_arduino_ind.py) and the other a testing protocol (conditioning_arduino_ind.py). 
+All experiment conditions are set beforehand in the *times.config* file. Importantly, ITI (inter-trial interval) settings in this file are used to generate a list of wait times. These wait times are used in two .py scripts, one of which is a training protocol (preconditioning_arduino_ind.py) and the other a testing protocol (conditioning_arduino_ind.py). 
 
 Once video recording has begun, the procedure for either protocols is as follows:
 
@@ -28,6 +28,18 @@ Once video recording has begun, the procedure for either protocols is as follows
 ## Running the experiment
 Run `python3 preconditioning_arduino_ind.py filename pair_index` replacing **filename** with whatever you want the resulting .csv and video files to be titled. If you have connected only one camera/Arduino pair, **pair_index** should always be 0. However, if you have multiple camera/Arduino pairs in **device pairs** in *times.config*, use **pair_index** to specify which device pair you are using. For example, given `device pairs = 2,1,4,3`, **pair_index** = 0 will specify video2/COM1, while **pair_index** = 1 will specify video4/COM3.
 
+## Data output
+
+ - filename.csv: Summary file, gives times when nose enters or exits food magazine and times when lever is pressed and released (mm:ss:ms)
+ - filename_present_times.csv : Protocol file, tells you when the lever was extended (seconds)
+ - filename_raw_decoded.csv/filename_raw_encoded.csv: Extra raw data including a readout of how many Arduino loops are completed per 1 second
+ 
+## Common problems
+
+**Video length does not match the actual run time:** Check the video framerate first - are levers in the video extended for the right amount of time? If video time seems faster than IRL time, you may be capturing less frames than expected. This may happen if you fail to peg down camera exposure settings - in low light, cameras using auto-exposure will increase exposure time to get better images, and as a result the number of frames captured will drop. Run `v4l2-ctl -d /dev/videoX --set-ctrl=exposure_absolute=300 --set-ctrl=exposure_auto=1`, replacing **X** with your camera device ID to check that your camera allows exposure to be manually set. 
+
+If framerate seems fine, open the video and move to the very end. Play the video and see if the video stops where the video player says it should. If the video keeps playing past the supposed end point, there may be an encoding error (in these cases we also tend to see the correct video length displayed under the video file's properties, but incorrect length everywhere else). Try copying the files using ffmpeg: `ffmpeg -i input.mp4 -c copy output.mp4` - the copy file should hopefully have the correct length
+ 
 # Operant Conditioning Chamber Wiring Diagram
 
 Levers: **Med Associates ENV-312-3 Retractable Mouse Lever**
