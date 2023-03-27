@@ -168,7 +168,8 @@ def run_arduino_ind():
             r_t_s = True
             break
         
-    def serial_reader(): #Try offloading reading the serial data to another thread
+    # Try offloading reading the serial data to another thread, not currently used
+    def serial_reader(): 
         while True:
             signal = ser.readline().decode().strip()
             if len(signal) > 0:
